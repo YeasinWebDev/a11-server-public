@@ -1,4 +1,4 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const express = require('express')
 const cors = require('cors')
 require('dotenv').config();
@@ -41,6 +41,7 @@ async function run() {
     const database = client.db('A11')
     // collection for AllCourses
     const AllCoursesCollection = database.collection('AllCourses')
+    const bookedCoursesCollection = database.collection('bookedCourses')
 
     app.get('/courses', async (req, res) =>{
         const courses = await AllCoursesCollection.find().toArray()
@@ -53,7 +54,13 @@ async function run() {
         res.json(result)
     })
 
+    app.get('/courses/:id', async (req, res) =>{
+      const id = req.params.id;
+      const course = await AllCoursesCollection.findOne({ _id: new ObjectId(id) })
+      res.json(course)
+    })
 
+   
 
 
 
