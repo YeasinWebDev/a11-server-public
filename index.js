@@ -60,7 +60,24 @@ async function run() {
       res.json(course)
     })
 
+     // booked_courses requests
+     app.post('/booked_courses', async (req, res) =>{
+      const newCourse = req.body;
+      const result = await bookedCoursesCollection.insertOne(newCourse)
+      res.json(result)
+    })
    
+    app.get('/booked_courses', async (req, res) =>{
+        const email = req.query.email;
+        const booked_courses = await bookedCoursesCollection.find({ user_email: email }).toArray()
+        res.send(booked_courses)
+    })
+
+    app.get('/booked_courses/:id', async (req, res) =>{
+      const id = req.params.id;
+      const course = await bookedCoursesCollection.findOne({ _id: new ObjectId(id) })
+      res.json(course)
+    })
 
 
 
