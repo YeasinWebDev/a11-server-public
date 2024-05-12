@@ -48,10 +48,10 @@ async function run() {
         res.json(courses)
     })
 
-    app.post('/courses' , async (req, res) => {
-        const newCourse = req.body;
-        const result = await AllCoursesCollection.insertOne(newCourse)
-        res.json(result)
+    app.get('/coursesByEmail', async (req, res) =>{
+      const email = req.query.email;
+      const courses = await AllCoursesCollection.find({ 'provider.email': email }).toArray()
+      res.send(courses)
     })
 
     app.get('/courses/:id', async (req, res) =>{
@@ -59,6 +59,27 @@ async function run() {
       const course = await AllCoursesCollection.findOne({ _id: new ObjectId(id) })
       res.json(course)
     })
+
+    app.post('/courses' , async (req, res) => {
+        const newCourse = req.body;
+        const result = await AllCoursesCollection.insertOne(newCourse)
+        res.json(result)
+    })
+
+    app.put('/courses/:id', async (req, res) =>{
+      const id = req.params.id;
+      const updatedCourse = req.body;
+      const result = await AllCoursesCollection.updateOne({ _id: new ObjectId(id) }, { $set: updatedCourse },{ upsert: true })
+      res.json(result)
+    })
+
+    app.delete('/courses/:id', async (req, res) =>{
+      const id = req.params.id;
+      const result = await AllCoursesCollection.deleteOne({ _id: new ObjectId(id) })
+      res.json(result)
+    })
+
+   
 
      // booked_courses requests
      app.post('/booked_courses', async (req, res) =>{
