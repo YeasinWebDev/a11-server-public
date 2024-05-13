@@ -60,6 +60,13 @@ async function run() {
       res.json(course)
     })
 
+    app.get('/coursesByName', async (req, res) => {
+        const name = req.query.name;
+        const course = await AllCoursesCollection.find({ course_Area: name }).toArray();
+        res.json(course);
+    });
+    
+
     app.post('/courses' , async (req, res) => {
         const newCourse = req.body;
         const result = await AllCoursesCollection.insertOne(newCourse)
