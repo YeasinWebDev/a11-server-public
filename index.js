@@ -70,10 +70,10 @@ async function run() {
 
     app.get("/coursesBySearch", async (req, res) => {
       const name = req.query.name;
-      const regex = new RegExp(name, 'i'); 
-      console.log(name)
+      const regex = new RegExp(name, "i");
+      console.log(name);
       const courses = await AllCoursesCollection.find({
-        Course_name:  { $regex: regex } 
+        Course_name: { $regex: regex },
       }).toArray();
       res.json(courses);
     });
@@ -124,6 +124,23 @@ async function run() {
         _id: new ObjectId(id),
       });
       res.json(course);
+    });
+
+    app.patch("/updateStatus", async (req, res) => {
+      const name = req.query.name;
+      const updatedStatus = req.body.status;
+      console.log(name, updatedStatus);
+      try {
+        const result = await bookedCoursesCollection.updateOne(
+          { name: name },
+          { $set: { course_Status: updatedStatus } }, 
+          { upsert: true }
+        );
+        res.json(result);
+      } catch (error) {
+        console.error("Error updating status:", error);
+        res.status(500).json({ error: "Failed to update status" });
+      }
     });
 
     // Send a ping to confirm a successful connection
