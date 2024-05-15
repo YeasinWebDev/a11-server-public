@@ -113,7 +113,7 @@ async function run() {
       res.send(courses);
     });
 
-    app.get("/courses/:id",verifyTOken, async (req, res) => {
+    app.get("/courses/:id", async (req, res) => {
       const id = req.params.id;
       const course = await AllCoursesCollection.findOne({
         _id: new ObjectId(id),
