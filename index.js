@@ -198,8 +198,7 @@ async function run() {
       try {
         const result = await bookedCoursesCollection.updateOne(
           { name: name },
-          { $set: { course_Status: updatedStatus } }, 
-          { upsert: true }
+          { $set: { course_Status: updatedStatus } }
         );
         res.json(result);
       } catch (error) {
