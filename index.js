@@ -14,7 +14,8 @@ app.use(
     origin: [
       "http://localhost:5173",
       "https://a-11-skillify.web.app",
-      "https://a-11-skillify.firebaseapp.com/",
+      "https://a-11-skillify.firebaseapp.com",
+      "https://cerulean-muffin-04a0f6.netlify.app"
     ],
     credentials: true,
   })
