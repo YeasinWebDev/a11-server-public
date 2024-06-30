@@ -15,7 +15,7 @@ app.use(
       "http://localhost:5173",
       "https://a-11-skillify.web.app",
       "https://a-11-skillify.firebaseapp.com",
-      "https://cerulean-muffin-04a0f6.netlify.app"
+      "https://skillifycourses.netlify.app"
     ],
     credentials: true,
   })
